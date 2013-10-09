@@ -2,14 +2,16 @@
 Contributors: bobbingwide, vsgloik
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: shortcode, tides, UK, heights and times, [bw_tides], saltwater
-Requires: 3.0.4
+Requires at least: 3.0.4
 Tested up to: 3.6.1
 Stable tag: 1.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Tide heights and times for UK ports and harbours
 
 == Description ==
-uk-tides displays tide times and heights for a particular location in the UK. The information that is displayed is obtained from the RSS feed for tidetimes.org.uk (e.g. http://www.tidetimes.org.uk/chichester-harbour-entrance-tide-times.rss). The data is cached until midnight. This plugin implements a lazy smart shortcode using the API provided by the oik plugin. 
+uk-tides displays tide times and heights for a particular location in the UK. The information that is displayed is obtained from the RSS feed for tidetimes.org.uk (e.g. http://www.tidetimes.org.uk/chichester-harbour-entrance-tide-times.rss ). The data is cached until midnight. This plugin implements a lazy smart shortcode using the API provided by the oik plugin. 
 
 You implement this on your website using the [bw_tides] shortcode.
 
@@ -36,7 +38,7 @@ Examples:
 
 Note: uk-tides is dependent upon the oik plugin. You can activate it but it will not work unless oik is also activated.
 Download oik from 
-[oik download](http://wordpress.org/extend/plugins/oik/0
+[oik download](http://wordpress.org/extend/plugins/oik/)
 
 == Frequently Asked Questions ==
 = How do I find the value for tideurl? =
@@ -49,6 +51,8 @@ Not anymore. It was disabled in oik version 1.11
 = What if I don't live in the UK? =
 uk-tides currently only works for the UK since the information is obtained from http://www.tidetimes.org.uk
 If you can point us to a resource for other locations then it should be possible to develop a very similar solution.
+
+For saltwater tide times and heights for the US see [US-tides WordPress plugin](http://www.oik-plugins.com/oik-plugins/us-tides)
 
 = Isn't there some JavaScript that does something similar? =
 YES. See http://www.tidetimes.org.uk/widgets

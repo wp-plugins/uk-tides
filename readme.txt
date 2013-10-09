@@ -1,10 +1,10 @@
 === uk-tides ===
-Contributors: bobbingwide
+Contributors: bobbingwide, vsgloik
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
-Tags: shortcode, tides, UK, heights and times, [bw_tides]
+Tags: shortcode, tides, UK, heights and times, [bw_tides], saltwater
 Requires: 3.0.4
-Tested up to: 3.3.1
-Stable tag: trunk
+Tested up to: 3.6.1
+Stable tag: 1.0
 
 Tide heights and times for UK ports and harbours
 
@@ -59,8 +59,13 @@ But you may find the output harder to (re)style.
 1. sample output for Portsmouth, Hants
 
 == Upgrade Notice ==
+= 1.1 =
+Now dependent upon oik v1.17 or higher
 
 == Changelog ==
+= 1.1 =
+* Changed: The generated output is formatted with divs and spans to enable styling with CSS
+
 = 1.0 =
 * initial version. Works with oik version 1.11 
 

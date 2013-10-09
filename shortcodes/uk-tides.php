@@ -1,8 +1,7 @@
 <?php 
-
 /*
 
-    Copyright 2011, 2012 Bobbing Wide (email : herb@bobbingwide.com )
+    Copyright 2011 - 2013 Bobbing Wide (email : herb@bobbingwide.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2,
@@ -161,6 +160,51 @@ function bw_tideurl_namify( $tideurl ) {
   return $newurl;
 }
 
+/**
+ * The string returned from tidetimes.org IS OK but it's not easy to style the output
+ * SO we'll change the <br/>s to <div>s and wrap the other stuff in spans
+                 
+   <a href="http://www.tidetimes.org.uk" title="Tide Times">Tide Times</a>& Heights for
+   <br/>
+   <a href="http://www.tidetimes.org.uk/chichester-harbour-entrance-tide-times" title="Chichester Harbour (Entrance) tide times">Chichester Harbour (Entrance)</a> on 29th October 2011
+   <br/>
+   <br/>01:18 - High Tide (5.00m)
+   <br/>06:40 - Low Tide (0.70m)
+   <br/>13:38 - High Tide (5.00m)
+   <br/>19:03 - Low Tide (0.70m)
+   <br/>
+
+ */
+function bw_tides_format_desc( $desc ) {
+  $descs = explode( "<br/>", $desc );
+  bw_trace2( $descs, "descs array" );
+  foreach ( $descs as $stuff ) {
+    sdiv();
+    bw_tides_format_stuff( $stuff );
+    ediv();
+  }
+}
+
+/**
+ * Reformat the content into a series of spans
+ *
+ * @param string $stuff - the next line to be reformatted
+ */
+function bw_tides_format_stuff( $stuff ) {
+  $ch = substr( $stuff, 0, 1 );
+  
+  if ( is_numeric( $ch ) ) {
+    $stuff = str_replace( "(", "( ", $stuff );
+    $stuff = str_replace( ")", " )", $stuff );
+    $stuffs = explode( " ", $stuff );
+    foreach ( $stuffs as $key => $sp ) {
+      sepan( "bw_tides_$key", $sp );
+      e( " " );
+    }
+  } else {
+    e( $stuff ); 
+  }
+}  
 
 /**
  * display information about high and low tides obtained from www.tidetimes.org.uk
@@ -184,30 +228,36 @@ function bw_tides( $atts=NULL ) {
   
   if ( $desc === FALSE || $title === FALSE || $link === FALSE  ) {
     $tideinfo = bw_get_tide_info( $tideurl );
-    $channel = $tideinfo->channel;    
-    bw_trace( $channel, __FUNCTION__, __LINE__, __FILE__, 'channel');
-    $link = (string) $channel->link;   
+    
+    if ( is_wp_error( $tideinfo ) || !$tideinfo->channel ) {
+      p( "Tide times and heights not available for $tideurl" );
+    } else { 
+    
+      $channel = $tideinfo->channel;    
+      bw_trace( $channel, __FUNCTION__, __LINE__, __FILE__, 'channel');
+      $link = (string) $channel->link;   
 
-    /* cast to a string since otherwise there can be a problem with attempting to serialise a simpleXML element */
-    $desc = (string) $channel->item->description;
-    
-    bw_trace( $desc, __FUNCTION__, __LINE__, __FILE__, 'desc');
-    /* We may need to strip some unwanted advertising which appears in an anchor tag <a */
-    /*
-    $desc = preg_replace('/<a (.*?)<\/a>/', "\\2", $desc);
-    $allowed = array( 'b' => array(),
-                      'br' =>  array()
-                    );  
-    $desc = wp_kses( $desc, $allowed );
-    */
-    $title = (string) $channel->item->title;  
-    // $title = $channel->item->title;   uncomment this to cause set_transient to fail
-    
-    $secs = bw_time_of_day_secs();
-    $secs = 86400 - $secs;
-    set_transient( "bw_tides_desc_" . $store, $desc, $secs);
-    set_transient( "bw_tides_title_" . $store, $title, $secs);
-    set_transient( "bw_tides_link_" . $store, $link, $secs);
+      /* cast to a string since otherwise there can be a problem with attempting to serialise a simpleXML element */
+      $desc = (string) $channel->item->description;
+      
+      bw_trace( $desc, __FUNCTION__, __LINE__, __FILE__, 'desc');
+      /* We may need to strip some unwanted advertising which appears in an anchor tag <a */
+      /*
+      $desc = preg_replace('/<a (.*?)<\/a>/', "\\2", $desc);
+      $allowed = array( 'b' => array(),
+                        'br' =>  array()
+                      );  
+      $desc = wp_kses( $desc, $allowed );
+      */
+      $title = (string) $channel->item->title;  
+      // $title = $channel->item->title;   uncomment this to cause set_transient to fail
+      
+      $secs = bw_time_of_day_secs();
+      $secs = 86400 - $secs;
+      set_transient( "bw_tides_desc_" . $store, $desc, $secs);
+      set_transient( "bw_tides_title_" . $store, $title, $secs);
+      set_transient( "bw_tides_link_" . $store, $link, $secs);
+    }  
   }
   else {
      // We got all the data from the transient store     
@@ -220,10 +270,10 @@ function bw_tides( $atts=NULL ) {
   // Now that tidetimes.org.uk creates the links itself we only need to display the informaton in span
   // with class tides, to allow for custom CSS styling
   //alink( "tides", $link , $desc , $title ); 
-  sepan( "tides", $desc );
-  
+  span( "bw_tides" );
+  bw_tides_format_desc( $desc ); 
+  epan( "bw_tides" );
   return( bw_ret());
-
 }
 
 function bw_tides__help( $shortcode='bw_tides' ) {

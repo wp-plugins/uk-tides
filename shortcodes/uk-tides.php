@@ -1,7 +1,7 @@
 <?php 
 /*
 
-    Copyright 2011 - 2013 Bobbing Wide (email : herb@bobbingwide.com )
+    Copyright 2011 - 2014 Bobbing Wide (email : herb@bobbingwide.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2,
@@ -20,17 +20,21 @@
 */
 
 
-/**
+/** 
+  * Get tide information from the $tide_url 
+  * 
   * Code copied and cobbled from http://snippet.me/wordpress/wordpress-plugin-info-api/
   * having referred to http://ckon.wordpress.com/2010/07/20/undocumented-wordpress-org-plugin-api/
   * get XML information using simple xml load file
   *
-  * Note There is no error checking here. It can fail for many reasons
-  * but it will produce messages when it happens. 
+  * Note There is no error checking here. It can fail for many reasons but it will produce messages when it happens. 
   * The most likely causes of failure are:
   * - $tide_url is not a valid RSS feed - see bw_tideurl_namify()
   * - server is not connected to the internet 
   * - http://www.tidetimes.org.uk is not responding
+  * 
+  * @param string $tide_url - the RSS feed for the desired location
+  * @return string - the response XML
   */
 function bw_get_tide_info( $tide_url ) {
   $request_url = urlencode($tide_url);
@@ -72,7 +76,7 @@ C:\apache\htdocs\wordpress\wp-content\plugins\oik\oik-tides.php(45:0) 2011-04-29
 
 )
 
-as of 4th May the tideinfo->channel->item->description appeared to have additional Google Ad stuff
+as of 4th May 2011 the tideinfo->channel->item->description appeared to have additional Google Ad stuff
 
 
 C:\apache\htdocs\wordpress\wp-content\plugins\oik\oik-tides.php(45:0) 2011-05-04T03:17:51+00:00 bw_get_tide_info  response_xml SimpleXMLElement Object
@@ -102,7 +106,7 @@ C:\apache\htdocs\wordpress\wp-content\plugins\oik\oik-tides.php(45:0) 2011-05-04
 
 )
 
-from 28th October (first noticed) it changed again. The description was already formatted.
+from 28th October 2011 (first noticed) it changed again. The description was already formatted.
 C:\apache\htdocs\wordpress\wp-content\plugins\oik\oik-tides.php(44:0) 2011-10-29T16:49:09+00:00 54 bw_get_tide_info response_xml SimpleXMLElement Object
 (
     [@attributes] => Array
@@ -135,6 +139,11 @@ so it should be easy to construct a valid tide url if we want to
  
 */
 
+/**
+ * Return the time of day in seconds
+ * 
+ * @return $secs - time in seconds
+ */ 
 function bw_time_of_day_secs() {
   extract( localtime( time(), true ));
   $secs = ((($tm_hour * 60) + $tm_min) * 60) + $tm_sec;
@@ -145,6 +154,7 @@ function bw_time_of_day_secs() {
 
 /**
  * Form an URL for the given location assuming UK based
+ * 
  * @param string $tideurl user input
  * @return string $newurl - URL to use for the RSS feed
  */

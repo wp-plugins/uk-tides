@@ -2,8 +2,8 @@
 Contributors: bobbingwide, vsgloik
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: shortcode, tides, UK, heights and times, [bw_tides], saltwater
-Requires at least: 3.5
-Tested up to: 3.9
+Requires at least: 3.9
+Tested up to: 4.0
 Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -63,6 +63,9 @@ But you may find the output harder to (re)style.
 1. sample output for Portsmouth, Hants
 
 == Upgrade Notice ==
+= 1.4 =
+Now dependent upon oik v2.2 or higher. Tested with WordPress 4.0 
+
 = 1.3 = 
 Now dependent upon oik v2.1 or higher. Tested with WordPress 3.9
 
@@ -73,6 +76,10 @@ Still dependent upon oik v1.17 or higher
 Now dependent upon oik v1.17 or higher
 
 == Changelog ==
+= 1.4 =
+* Changed: Now dependent upon oik v2.2 or higher
+* Tested: With WordPress 4.0 and WordPress Multi Site
+
 = 1.3 =
 * Tested: With WordPress 3.8.1 
 * Changed: Plugin dependency checking

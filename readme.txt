@@ -3,7 +3,7 @@ Contributors: bobbingwide, vsgloik
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: shortcode, tides, UK, heights and times, [bw_tides], saltwater
 Requires at least: 3.9
-Tested up to: 4.1
+Tested up to: 4.2
 Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
